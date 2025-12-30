@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>エイムトレーナー</title>
+<style>
+body {
+  margin: 0;
+  background: #111;
+  overflow: hidden;
+  cursor: crosshair;
+  color: white;
+  font-family: sans-serif;
+}
+
+#score {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+}
+
+.target {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: red;
+  border-radius: 50%;
+}
+</style>
+</head>
+<body>
+
+<div id="score">スコア: 0</div>
+
+<script>
+let score = 0;
+
+function spawnTarget() {
+  const target = document.createElement("div");
+  target.className = "target";
+
+  const x = Math.random() * (window.innerWidth - 50);
+  const y = Math.random() * (window.innerHeight - 50);
+
+  target.style.left = x + "px";
+  target.style.top = y + "px";
+
+  target.onclick = () => {
+    score++;
+    document.getElementById("score").innerText = "スコア: " + score;
+    target.remove();
+  };
+
+  document.body.appendChild(target);
+
+  setTimeout(() => {
+    if (document.body.contains(target)) {
+      target.remove();
+    }
+  }, 1000);
+}
+
+setInterval(spawnTarget, 800);
+</script>
+
+</body>
+</html>
